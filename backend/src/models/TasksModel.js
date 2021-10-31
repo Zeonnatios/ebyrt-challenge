@@ -1,6 +1,14 @@
 const { ObjectId } = require('mongodb');
 const connection = require('../connection/connections');
 
+const getTaskById = async (id) => {
+  if (!ObjectId.isValid(id)) { return null; }
+
+  const db = await connection();
+  const task = db.collection('tasks').findOne(ObjectId(id));
+  return task;
+};
+
 const getAllTasks = async () => {
   const db = await connection();
   const tasks = await db.collection('tasks').find().toArray();
@@ -27,4 +35,13 @@ const updateTask = async ({ id, task, description, status, createdDate }) => {
   return { _id: id, task, description, status, createdDate };
 };
 
-module.exports = { getAllTasks, createNewTask, updateTask };
+const excludeTask = async ({ id }) => {
+  if (!ObjectId.isValid(id)) { return null; }
+
+  const db = await connection();
+  const task = await getTaskById(id);
+  await db.collection('tasks').deleteOne({ _id: ObjectId(id) });
+  return task;
+};
+
+module.exports = { getAllTasks, createNewTask, updateTask, excludeTask };
