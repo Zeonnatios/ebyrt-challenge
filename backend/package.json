@@ -4,7 +4,10 @@
   "description": "Backend - Desafio tecnico proposto pela Ebyrt",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js, .jsx"
   },
   "author": "Matheus Antonio",
   "license": "ISC",
@@ -17,8 +20,16 @@
     "mongodb": "^4.1.3"
   },
   "devDependencies": {
-    "eslint": "^8.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "6.8.0",
     "eslint-config-trybe-backend": "^1.0.4",
+    "husky": "^7.0.4",
+    "mongodb-memory-server": "^7.5.1",
     "nodemon": "^2.0.14"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
