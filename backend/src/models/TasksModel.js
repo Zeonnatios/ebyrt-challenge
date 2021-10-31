@@ -7,30 +7,24 @@ const getAllTasks = async () => {
   return tasks;
 };
 
-const createNewTask = async ({ task, description, status }) => {
+const createNewTask = async ({ task, description, status }, createdDate) => {
   const db = await connection();
-  const currentData = new Date();
-  const newTask = {
-    task,
-    description,
-    status,
-    createdData: currentData,
-    lastUpdate: currentData,
-  };
-  const inserted = await db.collection('tasks').insertOne(newTask);
-  return { _id: inserted.insertedId, ...newTask };
+  const inserted = await db.collection('tasks').insertOne(
+    { task, description, status, createdDate },
+  );
+  return { _id: inserted.insertedId, task, description, status, createdDate };
 };
 
-const updateTask = async ({ id, task, description, status, createdData }) => {
+const updateTask = async ({ id, task, description, status, createdDate }) => {
   if (!ObjectId.isValid(id)) { return null; }
 
   const db = await connection();
   await db.collection('tasks').updateOne(
     { _id: ObjectId(id) }, 
-    { $set: { task, description, status, createdData } },
+    { $set: { task, description, status, createdDate } },
   );
 
-  return { _id: id, task, description, status, createdData };
+  return { _id: id, task, description, status, createdDate };
 };
 
 module.exports = { getAllTasks, createNewTask, updateTask };

@@ -5,13 +5,14 @@ const getAllTasks = async () => {
   return tasks;
 };
 
-const createNewTask = async ({ task, description, status }) => {
-  const data = await TasksModel.createNewTask({ task, description, status });
+const createNewTask = async (task) => {
+  const createdDate = new Date();
+  const data = await TasksModel.createNewTask(task, createdDate);
   return data;
 };
 
-const updateTask = async ({ id, task, description, status, createdData }) => {
-  const updatedProduct = TasksModel.updateTask({ id, task, description, status, createdData });
+const updateTask = async (task) => {
+  const updatedProduct = TasksModel.updateTask(task);
   return updatedProduct;
 };
 
