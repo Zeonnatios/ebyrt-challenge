@@ -5,4 +5,9 @@ const getAllTasks = async () => {
   return tasks;
 };
 
-module.exports = { getAllTasks };
+const createNewTask = async ({ task, description, status }) => {
+  const data = await TasksModel.createNewTask({ task, description, status });
+  return data;
+};
+
+module.exports = { getAllTasks, createNewTask };
