@@ -19,4 +19,10 @@ const updateTask = rescue(async (req, res) => {
     return res.status(200).json(data);
   });
 
-module.exports = { getAllTasks, createNewTask, updateTask };
+  const excludeTask = rescue(async (req, res) => {
+    const { id } = req.params;
+    const data = await TasksServices.excludeTask({ id });
+    return res.status(200).json(data);
+  });
+
+module.exports = { getAllTasks, createNewTask, updateTask, excludeTask };
