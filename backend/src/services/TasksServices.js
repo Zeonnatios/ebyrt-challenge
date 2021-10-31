@@ -10,4 +10,9 @@ const createNewTask = async ({ task, description, status }) => {
   return data;
 };
 
-module.exports = { getAllTasks, createNewTask };
+const updateTask = async ({ id, task, description, status, createdData }) => {
+  const updatedProduct = TasksModel.updateTask({ id, task, description, status, createdData });
+  return updatedProduct;
+};
+
+module.exports = { getAllTasks, createNewTask, updateTask };
