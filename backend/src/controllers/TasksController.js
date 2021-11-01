@@ -7,15 +7,15 @@ const getAllTasks = rescue(async (req, res) => {
 });
 
 const createNewTask = rescue(async (req, res) => {
-    const { task, description, status } = req.body;
-    const data = await TasksServices.createNewTask({ task, description, status });
+    const { title, description, status } = req.body;
+    const data = await TasksServices.createNewTask({ title, description, status });
     return res.status(201).json(data);
 });
 
 const updateTask = rescue(async (req, res) => {
     const { id } = req.params;
-    const { task, description, status, createdDate } = req.body;
-    const data = await TasksServices.updateTask({ id, task, description, status, createdDate });
+    const { title, description, status, createdDate } = req.body;
+    const data = await TasksServices.updateTask({ id, title, description, status, createdDate });
     return res.status(200).json(data);
   });
 
