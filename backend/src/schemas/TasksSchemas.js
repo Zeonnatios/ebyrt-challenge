@@ -5,7 +5,8 @@ const message = {
 };
 
 const isNotString = (value) => (typeof value !== 'string');
-const isValidTask = (title, createdDate, status) => (!title || !createdDate || status);
+const isValidTask = (title, createdDate, status) => (!title || !createdDate 
+  || createdDate === undefined || !status);
 
 const validateTask = (task) => {
   const { title, status, createdDate } = task;
