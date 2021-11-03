@@ -5,13 +5,14 @@ const message = {
 };
 
 const isNotString = (value) => (typeof value !== 'string');
-const isValidTask = (task, createdDate, status) => (!task || !createdDate 
+const isValidTask = (title, createdDate, status) => (!title || !createdDate 
   || createdDate === undefined || !status);
 
-const validateTask = ({ task, status, createdDate }) => {
+const validateTask = (task) => {
+  const { task: title, status, createdDate } = task;
   switch (true) {
-    case isNotString(task): return { message: message.titleType };
-    case isValidTask(task, status, createdDate): return { message: message.emptyFields };
+    case isNotString(title): return { message: message.titleType };
+    case isValidTask(title, status, createdDate): return { message: message.emptyFields };
     default: return {};
   }
 };
