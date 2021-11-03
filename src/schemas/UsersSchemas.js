@@ -7,7 +7,7 @@ const message = {
 
 const isNotString = (value) => (typeof value !== 'string');
 
-const isValidTask = (title, createdDate, status) => (!title || !createdDate 
+const isNotEmpty = (title, createdDate, status) => (!title || !createdDate 
   || createdDate === undefined || !status);
   
 const isValidEmail = (email) => {
@@ -17,17 +17,17 @@ const isValidEmail = (email) => {
 
 const isValidPassword = (password) => password.length >= 6;
 
-const validateTask = (user) => {
+const validateUser = (user) => {
   const { name, email, password } = user;
   switch (true) {
     case isNotString(name): return { message: message.fieldType };
-    case isValidTask(name, email, password): return { message: message.emptyFields };
+    case isNotEmpty(name, email, password): return { message: message.emptyFields };
     case isValidEmail(email): return { message: message.invalidEntry }; 
     case isValidPassword(password): return { message: message.invalidEntry };
     default: return {};
   }
 };
 
-const errorToExcludeTask = { message: message.notFoundById };
+const errorToExcludeUser = { message: message.notFoundById };
 
-module.exports = { validateTask, errorToExcludeTask };
+module.exports = { validateUser, errorToExcludeUser };
