@@ -9,7 +9,7 @@ const isValidTask = (title, createdDate, status) => (!title || !createdDate
   || createdDate === undefined || !status);
 
 const validateTask = (task) => {
-  const { title, status, createdDate } = task;
+  const { task: title, status, createdDate } = task;
   switch (true) {
     case isNotString(title): return { message: message.titleType };
     case isValidTask(title, status, createdDate): return { message: message.emptyFields };

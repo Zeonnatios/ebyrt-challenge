@@ -15,24 +15,24 @@ const getAllTasks = async () => {
   return tasks;
 };
 
-const createNewTask = async ({ title, description, status, createdDate }) => {
+const createNewTask = async ({ task, description, status, createdDate }) => {
   const db = await connection();
   const inserted = await db.collection('tasks').insertOne(
-    { title, description, status, createdDate },
+    { task, description, status, createdDate },
   );
-  return { _id: inserted.insertedId, title, description, status, createdDate };
+  return { _id: inserted.insertedId, task, description, status, createdDate };
 };
 
-const updateTask = async ({ id, title, description, status, createdDate }) => {
+const updateTask = async ({ id, task, description, status, createdDate }) => {
   if (!ObjectId.isValid(id)) { return null; }
 
   const db = await connection();
   await db.collection('tasks').updateOne(
     { _id: ObjectId(id) }, 
-    { $set: { title, description, status, createdDate } },
+    { $set: { task, description, status, createdDate } },
   );
 
-  return { _id: id, title, description, status, createdDate };
+  return { _id: id, task, description, status, createdDate };
 };
 
 const excludeTask = async ({ id }) => {

@@ -8,8 +8,8 @@ const getAllTasks = rescue(async (req, res) => {
 });
 
 const createNewTask = rescue(async (req, res) => {
-  const { title, description, status } = req.body;
-  const data = await TasksServices.createNewTask({ title, description, status });
+  const { task, description, status } = req.body;
+  const data = await TasksServices.createNewTask({ task, description, status });
 
   if (data.err) return res.status(httpStatusCode.badRequest).json(data);
 
@@ -18,8 +18,8 @@ const createNewTask = rescue(async (req, res) => {
 
 const updateTask = rescue(async (req, res) => {
   const { id } = req.params;
-  const { title, description, status, createdDate } = req.body;
-  const data = await TasksServices.updateTask({ id, title, description, status, createdDate });
+  const { task, description, status, createdDate } = req.body;
+  const data = await TasksServices.updateTask({ id, task, description, status, createdDate });
 
   if (data.err) return res.status(httpStatusCode.badRequest).json(data);
 
