@@ -7,8 +7,7 @@ const getAllTasks = async () => {
 };
 
 const createNewTask = async (task) => {
-  const createdDate = new Date();
-  console.log(task);
+  const createdDate = Date.now();
   const validate = TasksSchemas.validateTask({ ...task, createdDate });
   
   if (validate.message) return { err: validate };
