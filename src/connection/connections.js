@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
 const OPTIONS = {
@@ -5,8 +6,10 @@ const OPTIONS = {
     useUnifiedTopology: true,
 };
 
-const MONGO_DB_URL = 'mongodb://localhost:27017/ebyrt'; // <- para o evaluator remoto
-const DB_NAME = 'ebyrt';
+const MONGO_DB_URL = 'mongodb+srv://superuser:superuser@cluster0.kzbjx.mongodb.net/'
++ 'ebyrt?retryWrites=true&w=majority' 
+|| process.env.MONGO_DB_URL;
+const DB_NAME = 'ebyrt' || process.env.DB_NAME;
 
 let db = null;
 
