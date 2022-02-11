@@ -11,12 +11,20 @@ const createNewTask = async (task) => {
   return data;
 };
 
-const updateTask = async (task) => {
-  const data = TasksModel.updateTask(task);
+const updateTask = async (id, task) => {
+  const taskById = await TasksModel.getTaskById(id);
+  if (!taskById) {
+    return { error: true, message: 'Tarefa não encontrada para atualizar!' };
+  }
+  const data = TasksModel.updateTask(id, task);
   return data;
 };
 
 const excludeTask = async (id) => {
+  const taskById = await TasksModel.getTaskById(id);
+  if (!taskById) {
+    return { error: true, message: 'Tarefa não encontrada para excluir!' };
+  }
   const data = await TasksModel.excludeTask(id);
   return data;
 };
