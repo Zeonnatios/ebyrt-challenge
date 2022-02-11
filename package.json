@@ -1,7 +1,10 @@
 {
-  "name": "ebyrt-challenge-backend",
+  "name": "ebytr-challenge-backend",
   "version": "1.0.0",
-  "description": "Backend - Desafio tecnico proposto pela Ebyrt",
+  "engines": {
+    "yarn": "1.22.17"
+  },
+  "description": "Backend - Desafio tecnico proposto pela Ebytr",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,9 +23,14 @@
     "mongodb": "^4.1.3"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
     "eslint": "6.8.0",
     "eslint-config-trybe-backend": "^1.0.4",
-    "mongodb-memory-server": "^7.5.1",
-    "nodemon": "^2.0.14"
+    "mocha": "^9.2.0",
+    "mongodb-memory-server": "^6.9.6",
+    "nodemon": "^2.0.14",
+    "nyc": "^15.1.0",
+    "sinon": "^13.0.1"
   }
 }
