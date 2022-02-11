@@ -6,10 +6,7 @@ const OPTIONS = {
     useUnifiedTopology: true,
 };
 
-const MONGO_DB_URL = 'mongodb+srv://superuser:superuser@cluster0.kzbjx.mongodb.net/'
-+ 'ebyrt?retryWrites=true&w=majority' 
-|| process.env.MONGO_DB_URL;
-const DB_NAME = 'ebyrt' || process.env.DB_NAME;
+const { MONGO_DB_URL, DB_NAME } = process.env;
 
 let db = null;
 

@@ -1,5 +1,4 @@
 const TasksModel = require('../models/TasksModel');
-const TasksSchemas = require('../schemas/TasksSchemas');
 
 const getAllTasks = async () => {
   const data = await TasksModel.getAllTasks();
@@ -8,26 +7,25 @@ const getAllTasks = async () => {
 
 const createNewTask = async (task) => {
   const createdDate = Date.now();
-  const validate = TasksSchemas.validateTask({ ...task, createdDate });
-  
-  if (validate.message) return { err: validate };
-
   const data = await TasksModel.createNewTask({ ...task, createdDate });
   return data;
 };
 
-const updateTask = async (task) => {
-  const validate = TasksSchemas.validateTask(task);
-  if (validate.message) return { err: validate };
-
-  const data = TasksModel.updateTask(task);
+const updateTask = async (id, task) => {
+  const taskById = await TasksModel.getTaskById(id);
+  if (!taskById) {
+    return { error: true, message: 'Tarefa não encontrada para atualizar!' };
+  }
+  const data = TasksModel.updateTask(id, task);
   return data;
 };
 
 const excludeTask = async (id) => {
+  const taskById = await TasksModel.getTaskById(id);
+  if (!taskById) {
+    return { error: true, message: 'Tarefa não encontrada para excluir!' };
+  }
   const data = await TasksModel.excludeTask(id);
-  if (!data) return { err: TasksSchemas.errorToExcludeTask };
-
   return data;
 };
 

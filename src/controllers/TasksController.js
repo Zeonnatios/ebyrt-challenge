@@ -1,38 +1,58 @@
-const rescue = require('express-rescue');
+const { StatusCodes } = require('http-status-codes');
+
+const { OK, CREATED, NOT_FOUND, INTERNAL_SERVER_ERROR } = StatusCodes;
 const TasksServices = require('../services/TasksServices');
-const httpStatusCode = require('../helpers/httpStatus');
 
-const getAllTasks = rescue(async (req, res) => {
-  const data = await TasksServices.getAllTasks();
-  return res.status(httpStatusCode.ok).json(data);
-});
+const getAllTasks = async (req, res, next) => {
+  try {
+    const data = await TasksServices.getAllTasks();
+    return res.status(OK).json(data);
+  } catch (error) {
+    next({ status: INTERNAL_SERVER_ERROR, message: 'Não foi possível encontrar tarefas!' });
+  }
+};
 
-const createNewTask = rescue(async (req, res) => {
-  const { task, description, status } = req.body;
-  const data = await TasksServices.createNewTask({ task, description, status });
+const createNewTask = async (req, res, next) => {
+  try {
+    const { task, description, status } = req.body;
+    const data = await TasksServices.createNewTask({ task, description, status });
+    return res.status(CREATED).json(data);
+  } catch (error) {
+    return next(
+      { status: INTERNAL_SERVER_ERROR, message: 'Não foi possível criar uma nova tarefa!' },
+      );
+  }
+};
 
-  if (data.err) return res.status(httpStatusCode.badRequest).json(data);
+const updateTask = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { task, description, status, createdDate } = req.body;
+    const data = await TasksServices.updateTask(id, { task, description, status, createdDate });
 
-  return res.status(httpStatusCode.created).json(data);
-});
+    if (data.error) {
+      return next({ status: NOT_FOUND, message: data.message });
+    }
+  
+    return res.status(OK).json(data);
+  } catch (error) {
+    return next({ status: INTERNAL_SERVER_ERROR, message: 'Não foi possível atualizar a tarefa!' });
+  }
+  };
 
-const updateTask = rescue(async (req, res) => {
-  const { id } = req.params;
-  const { task, description, status, createdDate } = req.body;
-  const data = await TasksServices.updateTask({ id, task, description, status, createdDate });
-
-  if (data.err) return res.status(httpStatusCode.badRequest).json(data);
-
-  return res.status(httpStatusCode.ok).json(data);
-  });
-
-const excludeTask = rescue(async (req, res) => {
-  const { id } = req.params;
-  const data = await TasksServices.excludeTask({ id });
-
-  if (data.err) return res.status(httpStatusCode.notFound).json(data);
-
-  return res.status(httpStatusCode.ok).json(data);
-});
+const excludeTask = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const data = await TasksServices.excludeTask({ id });
+  
+    if (data.error) {
+      return next({ status: NOT_FOUND, message: data.message });
+    }
+  
+    return res.status(OK).json(data);
+  } catch (error) {
+    return next({ status: INTERNAL_SERVER_ERROR, message: 'Não foi possível excluir a tarefa!' });
+  }
+};
 
 module.exports = { getAllTasks, createNewTask, updateTask, excludeTask };

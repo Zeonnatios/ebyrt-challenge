@@ -23,25 +23,24 @@ const createNewTask = async ({ task, description, status, createdDate }) => {
   return { _id: inserted.insertedId, task, description, status, createdDate };
 };
 
-const updateTask = async ({ id, task, description, status, createdDate }) => {
+const updateTask = async (id, task) => {
   if (!ObjectId.isValid(id)) { return null; }
 
   const db = await connection();
   await db.collection('tasks').updateOne(
     { _id: ObjectId(id) }, 
-    { $set: { task, description, status, createdDate } },
+    { $set: task },
   );
 
-  return { _id: id, task, description, status, createdDate };
+  return { _id: id, ...task };
 };
 
 const excludeTask = async ({ id }) => {
   if (!ObjectId.isValid(id)) { return null; }
 
   const db = await connection();
-  const task = await getTaskById(id);
   await db.collection('tasks').deleteOne({ _id: ObjectId(id) });
-  return task;
+  return { message: 'Tarefa excluída com sucesso!' };
 };
 
-module.exports = { getAllTasks, createNewTask, updateTask, excludeTask };
+module.exports = { getTaskById, getAllTasks, createNewTask, updateTask, excludeTask };
