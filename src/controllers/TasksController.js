@@ -1,38 +1,48 @@
-const rescue = require('express-rescue');
+const { StatusCodes } = require('http-status-codes');
 const TasksServices = require('../services/TasksServices');
-const httpStatusCode = require('../helpers/httpStatus');
 
-const getAllTasks = rescue(async (req, res) => {
-  const data = await TasksServices.getAllTasks();
-  return res.status(httpStatusCode.ok).json(data);
-});
+const getAllTasks = async (req, res, next) => {
+  try {
+    const data = await TasksServices.getAllTasks();
+    return res.status(StatusCodes.OK).json(data);
+  } catch (error) {
+    next({ status: StatusCodes.BAD_REQUEST, message: 'Não foi possível encontrar tarefas!' });
+  }
+};
 
-const createNewTask = rescue(async (req, res) => {
-  const { task, description, status } = req.body;
-  const data = await TasksServices.createNewTask({ task, description, status });
+const createNewTask = async (req, res, next) => {
+  try {
+    const { task, description, status } = req.body;
+    const data = await TasksServices.createNewTask({ task, description, status });
+    return res.status(StatusCodes.CREATED).json(data);
+  } catch (error) {
+    next({ status: StatusCodes.BAD_REQUEST, message: 'Não foi possível criar uma nova tarefa!' });
+  }
+};
 
-  if (data.err) return res.status(httpStatusCode.badRequest).json(data);
+const updateTask = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { task, description, status, createdDate } = req.body;
+    const data = await TasksServices.updateTask({ id, task, description, status, createdDate });
+  
+    return res.status(StatusCodes.OK).json(data);
+  } catch (error) {
+    next({ status: StatusCodes.BAD_REQUEST, message: 'Não foi possível atualizar a tarefa!' });
+  }
+  };
 
-  return res.status(httpStatusCode.created).json(data);
-});
-
-const updateTask = rescue(async (req, res) => {
-  const { id } = req.params;
-  const { task, description, status, createdDate } = req.body;
-  const data = await TasksServices.updateTask({ id, task, description, status, createdDate });
-
-  if (data.err) return res.status(httpStatusCode.badRequest).json(data);
-
-  return res.status(httpStatusCode.ok).json(data);
-  });
-
-const excludeTask = rescue(async (req, res) => {
-  const { id } = req.params;
-  const data = await TasksServices.excludeTask({ id });
-
-  if (data.err) return res.status(httpStatusCode.notFound).json(data);
-
-  return res.status(httpStatusCode.ok).json(data);
-});
+const excludeTask = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const data = await TasksServices.excludeTask({ id });
+  
+    if (data.err) return res.status(StatusCodes.NOT_FOUND).json(data);
+  
+    return res.status(StatusCodes.OK).json(data);
+  } catch (error) {
+    next({ status: StatusCodes.BAD_REQUEST, message: 'Não foi possível excluir a tarefa!' });
+  }
+};
 
 module.exports = { getAllTasks, createNewTask, updateTask, excludeTask };
