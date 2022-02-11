@@ -76,6 +76,11 @@ describe('Test TasksModel', () => {
       expect(taskUpdated).to.be.not.null;
     });
 
+    it('Return null', async () => {
+      const updateTask = await TasksModel.updateTask('123erro123', updateTaskMock);
+      expect(updateTask).to.be.null;
+    })
+
   });
 
   describe('Get Tasks', () => {
@@ -102,6 +107,11 @@ describe('Test TasksModel', () => {
       expect(response[0]).to.have.a.property('createdDate');
     });
 
+    it('Return null', async () => {
+      const getTaskById = await TasksModel.getTaskById('123erro123');
+      expect(getTaskById).to.be.null;
+    })
+
   });
 
   describe('Delete a Task', () => {
@@ -123,6 +133,12 @@ describe('Test TasksModel', () => {
       const deletedTask = await TasksModel.excludeTask(tasks[0]._id);
       expect(deletedTask).to.deep.equal({ message: 'Tarefa excluída com sucesso!' });
     });
+
+    it('Return null', async () => {
+      const tasks = await TasksModel.getAllTasks();
+      const deletedTask = await TasksModel.excludeTask('123erro123');
+      expect(deletedTask).to.be.null;
+    })
 
   });
 
