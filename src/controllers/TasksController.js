@@ -37,7 +37,9 @@ const excludeTask = async (req, res, next) => {
     const { id } = req.params;
     const data = await TasksServices.excludeTask({ id });
   
-    if (data.err) return res.status(StatusCodes.NOT_FOUND).json(data);
+    if (data.err) {
+      next({ status: StatusCodes.NOT_FOUND, message: 'Não foi encontrar a tarefa para excluir!' });
+    }
   
     return res.status(StatusCodes.OK).json(data);
   } catch (error) {
