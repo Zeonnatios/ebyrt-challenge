@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js, .jsx",
-    "test:unit": "mocha ./src/tests/unit/**/*$TEST_NAME*.{test,spec}.js --exit",
+    "test:unit": "mocha ./src/tests/integration/**/*$TEST_NAME*.{test,spec}.js --exit",
     "test:coverage": "nyc --all npm test"
   },
   "author": "Matheus Antonio",
