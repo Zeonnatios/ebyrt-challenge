@@ -116,4 +116,83 @@ describe('Test TasksController', () => {
     });
   });
 
+  describe('Call updateTask Controller', () => {
+
+    describe('Should return a object with updated task', () => {
+      const _id = '604cb554311d68f491ba5781';
+      const response = {};
+      const request = {
+        params: {
+          id: '604cb554311d68f491ba5781',
+        }
+      };
+      const next = () => {};
+
+      before(() => {
+        request.body = {
+          task: 'Testes',
+          description: 'Realizar testes unitários no backend com mocha',
+          status: 'pronto',
+          createdDate: 1644605373207,
+        };
+
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().resolves({_id, ...insertTaskMock});
+
+        sinon.stub(TasksServices, 'updateTask').resolves({_id, ...insertTaskMock});
+      });
+
+      after(() => {
+        TasksServices.updateTask.restore();
+      });
+
+      it('Should call with status 200', async () => {
+        await TasksController.updateTask(request, response, next);
+        expect(response.status.calledWith(200)).to.be.equal(true);
+      });
+
+      it('Should call a json with a object"', async () => {
+        await TasksController.updateTask(request, response, next);
+        expect(response.json.calledWith({ _id, ...insertTaskMock })).to.be.equal(true);
+        expect(response.json.calledWith(sinon.match.object)).to.be.equal(true);
+      });
+    });
+
+    describe('Should return a message of success', () => {
+      const _id = '604cb554311d68f491ba5781';
+      const response = {};
+      const request = {
+        params: {
+          id: '604cb554311d68f491ba5781',
+        }
+      };
+      const next = () => {};
+
+      before(() => {
+        request.body = {};
+
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().resolves({message: 'Tarefa não encontrada para excluir!'});
+
+        sinon.stub(TasksServices, 'excludeTask').resolves({message: 'Tarefa não encontrada para excluir!'});
+      });
+
+      after(() => {
+        TasksServices.excludeTask.restore();
+      });
+
+      it('Should call with status 200', async () => {
+        await TasksController.excludeTask(request, response, next);
+        expect(response.status.calledWith(200)).to.be.equal(true);
+      });
+
+      it('Should call a json with a object"', async () => {
+        await TasksController.excludeTask(request, response, next);
+        expect(response.json.calledWith({message: 'Tarefa não encontrada para excluir!'})).to.be.equal(true);
+        expect(response.json.calledWith(sinon.match.object)).to.be.equal(true);
+      });
+    });
+    
+  });
+
 });
