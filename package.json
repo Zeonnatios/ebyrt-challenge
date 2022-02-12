@@ -7,8 +7,10 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js, .jsx",
-    "dev:test": "mocha ./src/tests/integration/**/*$TEST_NAME*.{test,spec}.js --exit",
-    "test:coverage": "nyc --all yarn dev:test"
+    "test": "mocha ./src/tests/**/**/*$TEST_NAME*.{test,spec}.js --exit",
+    "test:unit": "mocha ./src/tests/unit/**/*$TEST_NAME*.{test,spec}.js --exit",
+    "test:integration": "mocha ./src/tests/integration/**/*$TEST_NAME*.{test,spec}.js --exit",
+    "test:coverage": "nyc --all yarn test"
   },
   "author": "Matheus Antonio",
   "license": "ISC",
