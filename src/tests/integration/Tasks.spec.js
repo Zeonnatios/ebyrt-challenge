@@ -267,4 +267,35 @@ describe('Testing endpoint /tasks', () => {
 
   });
 
+  describe('Testing DELETE /tasks', () => {
+    let response;
+
+    describe('On success', () => {
+      it('Return a object with the inserted task', async () => {
+        task = await chai.request(server).get('/tasks');
+        const id = task.body[0]._id;
+
+        response = await chai.request(server).delete(`/tasks/${id}`);
+  
+        expect(response).to.have.status(200);
+        expect(response.body).to.be.an('object');
+        expect(response.body).to.have.property('message');
+        expect(response.body.message).to.be.equal('Tarefa excluída com sucesso!');
+      });
+    });
+
+    describe('When not find the task to delete', () => {
+      it('Return a object with the inserted task', async () => {
+
+        response = await chai.request(server).delete('/tasks/123fail');
+  
+        expect(response).to.have.status(404);
+        expect(response.body).to.be.an('object');
+        expect(response.body).to.have.property('message');
+        expect(response.body.message).to.be.equal('Tarefa não encontrada para excluir!');
+      });
+    });
+
+  });
+
 });
