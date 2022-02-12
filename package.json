@@ -2,6 +2,9 @@
   "name": "ebytr-challenge-backend",
   "version": "1.0.0",
   "description": "Backend - Desafio tecnico proposto pela Ebytr",
+  "engines": {
+    "yarn": "1.22.17"
+  },
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
