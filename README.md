@@ -1,6 +1,6 @@
 <h1 align="center">Lista de Tarefas</h1>
 
-<p align="center">Olá, seja bem vindo(a). Este é o projeto Lista de Tarefas durante a semana "Blitz de Carreira"!</p>
+<p align="center">Olá, seja bem vindo(a). Este é o projeto Lista de Tarefas durante a semana do 1º "Blitz de Carreira" na Trybe!</p>
 
  <p align="center">
   <a href="#bookmark-sobre">Sobre</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
