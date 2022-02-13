@@ -7,6 +7,7 @@
   <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#hammer_and_wrench-features">Features</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#notebook-instalação">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#cloud-deploy">Deploy</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#technologist-autor">Autor</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
@@ -67,10 +68,11 @@ $ npm start ou yarn start
 # Pode executar a aplicação em modo de desenvolvimento:
 $ npm run dev ou yarn dev
 
-# O servidor inciará na porta: 3000 - acesse <http://localhost:3000>
+# O servidor inciará na porta: 3000 - acesse <http://localhost:3000/tasks>
+
+# A documentação da API pode ser acessada aqui --> <http://localhost:3000/api-docs>
 
 # Para rodar todos os testes, execute:
-
 $ npm test ou yarn test
 
 # Para rodar os testes unitários, execute:
@@ -86,8 +88,28 @@ $ npm test:coverage ou yarnt est:coverage
 
 ## :dart: Cobertura de Testes
 
+Total de cobertura
+
+- Statement Coverage: 97.81%
+- Branch Coverage: 86.36%
+- Function Coverage: 100%
+- Lines: 98.41%
+
 <img src="coverage.png" alt="Coverage Page" />
 
+
+## :cloud: Deploy
+
+Link do deploy da aplicação no heroku: <https://zeonnatios-tasks-backend.herokuapp.com/>
+
+### Rotas acessíveis:
+
+```
+Rota das tarefas: <https://zeonnatios-tasks-backend.herokuapp.com/tasks>
+
+Rota para a documentação feita com swagger: <https://zeonnatios-tasks-backend.herokuapp.com/api-docs/>
+
+```
 
 ## :technologist: Autor:
 
