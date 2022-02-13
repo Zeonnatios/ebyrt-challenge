@@ -70,7 +70,7 @@
         }
       },
       "get": {
-        "summary": "Cadastro de tarefa",
+        "summary": "Listagem de tarefas",
         "description": "Essa rota é responsável por listar todas as tarefas cadastradas!",
         "tags": ["Tasks"],
         "responses": {
@@ -100,6 +100,123 @@
           }
         }
       }
+    },
+    "/tasks/{id}": {
+      "put": {
+        "summary": "Alterar a tarefa por id",
+        "description": "Essa rota é responsável por alterar os dados de uma tarefa pelo id!",
+        "tags": ["Tasks"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da tarefa a ser alterada",
+            "required": true
+          }
+        ],
+        "requestBody": { 
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskUpdate"
+              },
+              "examples": {
+                "task": {
+                  "value": {
+                    "task": "Teste",
+                    "description": "Criar teste ponta a ponta",
+                    "status": "pronto",
+                    "createdDate": 1644703645013
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object", 
+                  "$ref": "#/components/schemas/TaskPostResponseSuccess"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/TaskNotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object", 
+                  "$ref": "#/components/schemas/TaskPostResponseFailure"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir uma tarefa por id",
+        "description": "Essa rota é responsável por excluir uma tarefa pelo id!",
+        "tags": ["Tasks"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da tarefa a ser excluída",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object", 
+                  "$ref": "#/components/schemas/TaskDeleteResponseSuccess"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/TaskNotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object", 
+                  "$ref": "#/components/schemas/TaskPostResponseFailure"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -112,6 +229,15 @@
           "status": { "type": "string" }
         }
       },
+      "TaskUpdate": {
+        "type": "object",
+        "properties": {
+          "task": { "type": "string" },
+          "description": { "type": "string" },
+          "status": { "type": "string" },
+          "createdDate": { "type": "number" }
+        }
+      },
       "TaskPostResponseSuccess": {
         "type": "object",
         "properties": {
@@ -119,10 +245,22 @@
           "task": { "type": "string" },
           "description": { "type": "string" },
           "status": { "type": "string" },
-          "createdAt": { "type": "number" }
+          "createdDate": { "type": "number" }
         }
       },
       "TaskPostResponseFailure": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      },
+      "TaskNotFound": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      },
+      "TaskDeleteResponseSuccess": {
         "type": "object",
         "properties": {
           "message": { "type": "string" }
