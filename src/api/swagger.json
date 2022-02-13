@@ -57,11 +57,42 @@
             }
           },
           "500": {
-            "description": "OK",
+            "description": "INTERNAL SERVER ERROR",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object", 
+                  "$ref": "#/components/schemas/TaskPostResponseFailure"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Cadastro de tarefa",
+        "description": "Essa rota é responsável por listar todas as tarefas cadastradas!",
+        "tags": ["Tasks"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array", 
+                  "items": {
+                    "$ref": "#/components/schemas/TaskPostResponseSuccess"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array", 
                   "$ref": "#/components/schemas/TaskPostResponseFailure"
                 }
               }
