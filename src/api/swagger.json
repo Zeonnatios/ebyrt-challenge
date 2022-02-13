@@ -1,0 +1,102 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de manipulação de tarefas",
+    "description": "Essa API tem como objetivo a manipulação de tarefas",
+    "contact": {
+      "name": "Matheus Antonio",
+      "url": "https://www.github.com/Zeonnatios",
+      "email": "matheusantonio232@gmail.com"
+    },
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "Tasks",
+      "description": "Organize suas tarefas"
+    }
+  ],
+  "paths": {
+    "/tasks": {
+      "post": {
+        "summary": "Cadastro de tarefa",
+        "description": "Essa rota é responsável por cadastrar uma nova tarefa!",
+        "tags": ["Tasks"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              },
+              "examples": {
+                "task": {
+                  "value": {
+                    "task": "Teste",
+                    "description": "Criar teste ponta a ponta",
+                    "status": "pendente"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object", 
+                  "$ref": "#/components/schemas/TaskPostResponseSuccess"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object", 
+                  "$ref": "#/components/schemas/TaskPostResponseFailure"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "task": { "type": "string" },
+          "description": { "type": "string" },
+          "status": { "type": "string" }
+        }
+      },
+      "TaskPostResponseSuccess": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "task": { "type": "string" },
+          "description": { "type": "string" },
+          "status": { "type": "string" },
+          "createdAt": { "type": "number" }
+        }
+      },
+      "TaskPostResponseFailure": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}
